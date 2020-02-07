@@ -1,4 +1,4 @@
-select user(), database();
+-- select user(), database();
 
 -- title
 -- desc title;
