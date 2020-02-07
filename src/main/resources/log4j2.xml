@@ -6,7 +6,7 @@
 			<PatternLayout pattern="%5p [%t] - %m%n" />
 		</Console>
 
-		<File name="File" fileName="./logs/native_jdbc_file.log" append="true">
+		<File name="File" fileName="./logs/gradle_jdbc.log" append="true">
 			<PatternLayout
 				pattern="[%-5level] [%d{yyyy-MM-dd HH:mm:ss}] %m%n" />
 		</File>
