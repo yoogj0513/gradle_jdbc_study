@@ -1,0 +1,103 @@
+package gradle_jdbc_study.ui;
+
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+@SuppressWarnings("serial")
+public class MainFrame extends JFrame implements ActionListener {
+
+	private JPanel contentPane;
+	private LoginFrame loginFrame;
+	private JButton btnLogOut;
+	private JLabel lblLoginName;
+	private JPanel pTop;
+//	private JLabel lblNewLabel;
+//	private JLabel lblNewLabel_1;
+//	private JButton btnNewButton;
+	private JPanel panel;
+	private JButton btnTitle;
+	private JButton btnDepartment;
+	private JButton btnEmployee;
+	
+	public MainFrame() {
+		initialize();
+	}
+	
+	private void initialize() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 225);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		pTop = new JPanel();
+		contentPane.add(pTop);
+		
+		lblLoginName = new JLabel("New label");
+		lblLoginName.setFont(new Font("맑은 고딕", Font.BOLD, 40));
+		lblLoginName.setHorizontalAlignment(SwingConstants.CENTER);
+		pTop.add(lblLoginName);
+		
+		btnLogOut = new JButton("로그아웃");
+		btnLogOut.addActionListener(this);
+		pTop.add(btnLogOut);
+		
+		loginNameRefresh();
+		
+		panel = new JPanel();
+		contentPane.add(panel);
+		panel.setLayout(new GridLayout(0, 3, 5, 5));
+		
+		btnTitle = new JButton("직책");
+		panel.add(btnTitle);
+		
+		btnDepartment = new JButton("부서 정보");
+		btnDepartment.addActionListener(this);
+		panel.add(btnDepartment);
+		
+		btnEmployee = new JButton("사원 정보");
+		panel.add(btnEmployee);
+	}
+
+	// 로그인 시 로그인 회원 이름 다시 받기
+	public void loginNameRefresh() {
+		lblLoginName.setText(LoginFrame.loginEmp.getEmpName());
+	}
+
+	public void setLoginFrame(LoginFrame loginFrame) {
+		this.loginFrame = loginFrame;
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnDepartment) {
+			btnDepartmentActionPerformed(e);
+		}
+		if (e.getSource() == btnLogOut) {
+			btnLogOutActionPerformed(e);
+		}
+	}
+	protected void btnLogOutActionPerformed(ActionEvent e) {
+		LoginFrame.loginEmp = null;
+		dispose();
+		loginFrame.setVisible(true);
+		loginFrame.clearTf();
+	}
+	
+	protected void btnDepartmentActionPerformed(ActionEvent e) {
+		JFrame frame = new JFrame();
+		frame.setBounds(100, 100, 450, 400);
+		DepartmentUiPanel tp = new DepartmentUiPanel();
+		frame.getContentPane().add(tp);
+		frame.setVisible(true);
+	}
+}

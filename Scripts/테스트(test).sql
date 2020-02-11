@@ -42,7 +42,3 @@ select emp_no, emp_name, title, manager, salary, dept, hire_date
 	from employee
 	where emp_no = 1003 and passwd = password('1234567');
 	
-
-
-
-

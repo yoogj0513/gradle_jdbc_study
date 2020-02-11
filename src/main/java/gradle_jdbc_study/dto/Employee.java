@@ -1,6 +1,5 @@
 package gradle_jdbc_study.dto;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class Employee {
@@ -20,6 +19,20 @@ public class Employee {
 
 	public Employee(int empNo) {
 		this.empNo = empNo;
+	}
+	
+	public Employee(int empNo, String passwd) {
+		this.empNo = empNo;
+		this.passwd = passwd;
+	}
+
+	public Employee(int empNo, String empName, Title title, Employee manager, int salary, Department dept) {
+		this.empNo = empNo;
+		this.empName = empName;
+		this.title = title;
+		this.manager = manager;
+		this.salary = salary;
+		this.dept = dept;
 	}
 
 	public Employee(int empNo, String empName, Title title, Employee manager, int salary, Department dept,
@@ -162,7 +175,7 @@ public class Employee {
 				manager.getEmpNo(), 
 				salary, 
 				dept.getDeptNo(), 
-				passwd, 
+				passwd==null?"****":passwd, 
 				String.format("%1$tF %1$tT", hireDate), //tF, tT :F(년-월-일) T(00:00:00) 날짜 포멧 / 1$는 하나의 매개변수로 여러 곳에 적용
 				pic != null? pic.length:null);
 	}
