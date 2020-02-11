@@ -212,4 +212,25 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		dept.setDeptName(rs.getString("dept_name"));
 		return new Employee(empNo, empName, title, manager, salary, dept);
 	}
+
+	@Override
+	public List<Employee> selectEmployeeGroupByTitle(Title title) {
+		String sql="select e.emp_no, e.emp_name, e.title, t.title_name, m.emp_name as manager_name, m.emp_no as manager_no, e.salary, e.dept, d.dept_name" + 
+				"	from employee e left join employee m on e.manager = m.emp_no join department d on e.dept = d.dept_no join title t on e.title = t.title_no " + 
+				"	where e.title = ?";
+		List<Employee> list = new ArrayList<>();
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, title.getTitleNo());
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()){
+				while(rs.next()) {
+					list.add(getEmployeeFull(rs));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

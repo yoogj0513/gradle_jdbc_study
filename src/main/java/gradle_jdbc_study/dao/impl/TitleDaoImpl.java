@@ -112,6 +112,5 @@ public class TitleDaoImpl implements TitleDao {
 			e.printStackTrace();
 		}
 		return res;
-	}
-
+	}	
 }

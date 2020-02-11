@@ -27,11 +27,11 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnTitle;
 	private JButton btnDepartment;
 	private JButton btnEmployee;
-	
+
 	public MainFrame() {
 		initialize();
 	}
-	
+
 	private void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 225);
@@ -39,32 +39,33 @@ public class MainFrame extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		pTop = new JPanel();
 		contentPane.add(pTop);
-		
+
 		lblLoginName = new JLabel("New label");
 		lblLoginName.setFont(new Font("맑은 고딕", Font.BOLD, 40));
 		lblLoginName.setHorizontalAlignment(SwingConstants.CENTER);
 		pTop.add(lblLoginName);
-		
+
 		btnLogOut = new JButton("로그아웃");
 		btnLogOut.addActionListener(this);
 		pTop.add(btnLogOut);
-		
+
 		loginNameRefresh();
-		
+
 		panel = new JPanel();
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 3, 5, 5));
-		
+
 		btnTitle = new JButton("직책");
+		btnTitle.addActionListener(this);
 		panel.add(btnTitle);
-		
+
 		btnDepartment = new JButton("부서 정보");
 		btnDepartment.addActionListener(this);
 		panel.add(btnDepartment);
-		
+
 		btnEmployee = new JButton("사원 정보");
 		panel.add(btnEmployee);
 	}
@@ -79,6 +80,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnTitle) {
+			btnTitleActionPerformed(e);
+		}
 		if (e.getSource() == btnDepartment) {
 			btnDepartmentActionPerformed(e);
 		}
@@ -86,17 +90,26 @@ public class MainFrame extends JFrame implements ActionListener {
 			btnLogOutActionPerformed(e);
 		}
 	}
+
 	protected void btnLogOutActionPerformed(ActionEvent e) {
 		LoginFrame.loginEmp = null;
 		dispose();
 		loginFrame.setVisible(true);
 		loginFrame.clearTf();
 	}
-	
+
 	protected void btnDepartmentActionPerformed(ActionEvent e) {
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 450, 400);
 		DepartmentUiPanel tp = new DepartmentUiPanel();
+		frame.getContentPane().add(tp);
+		frame.setVisible(true);
+	}
+
+	protected void btnTitleActionPerformed(ActionEvent e) {
+		JFrame frame = new JFrame();
+		frame.setBounds(100, 100, 450, 450);
+		TitleUiPanel tp = new TitleUiPanel();
 		frame.getContentPane().add(tp);
 		frame.setVisible(true);
 	}
