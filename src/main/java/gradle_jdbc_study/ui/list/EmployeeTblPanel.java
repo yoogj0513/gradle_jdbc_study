@@ -12,7 +12,7 @@ public class EmployeeTblPanel extends AbstractTblPanel<Employee> {
 	@Override
 	protected void setTblWidthAlign() {
 		//empno, empname, title, manager, salary, dno
-		tableSetWidth(100, 150, 50, 150, 150, 100);
+		tableSetWidth(100, 100, 80, 150, 100, 100);
 		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 5);
 		tableCellAlign(SwingConstants.RIGHT, 4);
 		
@@ -26,18 +26,20 @@ public class EmployeeTblPanel extends AbstractTblPanel<Employee> {
 	@Override
 	protected Object[] toArray(Employee item) {
 		String manager;
-		if(item.getManager().getEmpName() == null) {
+		
+		if (item.getManager().getEmpName()==null) {
 			manager = "";
-		} else {
+		}else {
 			manager = String.format("%s(%d)", item.getManager().getEmpName(), item.getManager().getEmpNo());
 		}
+		
 		return new Object[] {
-				item.getEmpNo(),
-				item.getEmpName(),
-				String.format("%s(%d)", item.getTitle().getTitleName(), item.getTitle().getTitleNo()),
-				manager, 	//직속상사명(사원번호)
-				String.format("%,d", item.getSalary()),				// 천단뒤 구분 기호
-				String.format("%s(%d)", item.getDept().getDeptName(), item.getDept().getDeptNo()) 		//부서명(부서번호)
+			item.getEmpNo(),
+			item.getEmpName(),
+			String.format("%s(%d)", item.getTitle().getTitleName(), item.getTitle().getTitleNo()),
+			manager, //직속상사명(사원번호)
+			String.format("%,d", item.getSalary()),			//천단위구분기호
+			String.format("%s(%d)", item.getDept().getDeptName(), item.getDept().getDeptNo())		//부서명(부서번호)
 		};
 	}
 

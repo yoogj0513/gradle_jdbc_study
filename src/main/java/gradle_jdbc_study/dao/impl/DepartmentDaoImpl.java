@@ -25,13 +25,13 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		String sql = "select dept_no, dept_name, floor from department where dept_no = ?";
 		try(Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setInt(1, dept.getDeptNo());
-			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
-				dept = getDept(rs);
-			}
 			LogUtil.prnLog(pstmt);
-			return dept;
+			pstmt.setInt(1, dept.getDeptNo());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getDept(rs);
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

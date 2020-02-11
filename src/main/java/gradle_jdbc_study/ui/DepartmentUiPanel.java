@@ -1,22 +1,20 @@
 package gradle_jdbc_study.ui;
 
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import gradle_jdbc_study.dto.Department;
 import gradle_jdbc_study.dto.Employee;
 import gradle_jdbc_study.ui.content.DepartmentPanel;
-import javax.swing.JButton;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
 import gradle_jdbc_study.ui.list.DepartmentTblPanel;
 import gradle_jdbc_study.ui.service.DepartmentUiService;
 
@@ -24,15 +22,17 @@ import gradle_jdbc_study.ui.service.DepartmentUiService;
 public class DepartmentUiPanel extends JPanel implements ActionListener {
 	
 	private DepartmentUiService service;
-	private JButton btnAdd;
-	private JButton btnCancel;
 	private DepartmentPanel pDepartment;
 	private DepartmentTblPanel pDeptList;
 	private DlgEmployee dialog;
 	private int updateIdx;
 	
+	private JButton btnAdd;
+	private JButton btnCancel;
+	
 	public DepartmentUiPanel() {
 		service = new DepartmentUiService();
+		dialog = new DlgEmployee();
 		initialize();
 	}
 	private void initialize() {
@@ -67,33 +67,6 @@ public class DepartmentUiPanel extends JPanel implements ActionListener {
 		btnCancel.addActionListener(this);
 	}
 	
-	ActionListener myPopMenuListener = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getActionCommand().contentEquals("수정")) {
-				pDepartment.setItem(pDeptList.getSelectedItem());
-				updateIdx = pDeptList.getSelectedRowIdx();
-				btnAdd.setText("수정");
-			}
-			if(e.getActionCommand().contentEquals("삭제")) {
-				JOptionPane.showMessageDialog(null, e.getActionCommand());
-				service.deleteDept(pDeptList.getSelectedItem());
-				pDeptList.removeRow();
-			}
-			if(e.getActionCommand().contentEquals("소속사원")) {
-				Department selectedDept = pDeptList.getSelectedItem();
-				List<Employee> list = service.showEmployeeGroupByDno(selectedDept);
-				dialog.setEmpList(list);
-				dialog.setTitle(selectedDept.getDeptName() + " 부서");
-				
-				dialog.setVisible(true);
-//				JOptionPane.showMessageDialog(null, e.getActionCommand());
-			}
-		}
-	};
-	
-	
 	private JPopupMenu createPopupMenu() {
 		JPopupMenu popMenu =  new JPopupMenu();
 		
@@ -111,6 +84,34 @@ public class DepartmentUiPanel extends JPanel implements ActionListener {
 		
 		return popMenu;
 	}
+	
+	ActionListener myPopMenuListener = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getActionCommand().contentEquals("수정")) {
+				pDepartment.setItem(pDeptList.getSelectedItem());
+				updateIdx = pDeptList.getSelectedRowIdx();
+				btnAdd.setText("수정");
+			}
+			if(e.getActionCommand().contentEquals("삭제")) {
+				service.deleteDept(pDeptList.getSelectedItem());
+				pDeptList.removeRow();
+				JOptionPane.showMessageDialog(null, "삭제되었습니다.");
+			}
+			if(e.getActionCommand().contentEquals("소속사원")) {
+				Department selectedDept = pDeptList.getSelectedItem(); //선택한 부서정보
+				List<Employee> list = service.showEmployeeGroupByDno(selectedDept);
+				dialog.setEmpList(list);
+				dialog.setTitle(selectedDept.getDeptName() + " 부서");
+				
+				dialog.setVisible(true);
+			}
+		}
+	};
+	
+	
+	
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCancel) {

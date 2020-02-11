@@ -181,7 +181,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public List<Employee> selectEmployeeGroupByDno(Department dept) {
-		String sql = "select e.emp_no, e.emp_name , e.title , t.title_name, m.emp_name as manager_name , m.emp_no as manager_no , e.salary , e.dept , d.dept_name " + 
+		String sql = "select e.emp_no, e.emp_name, e.title, t.title_name, m.emp_name as manager_name, m.emp_no as manager_no, e.salary, e.dept, d.dept_name" + 
 			     "  from employee e left join employee m on e.manager = m.emp_no join department d on e.dept = d.dept_no join title t on e.title = t.title_no " + 
 			     " where e.dept = ?";
 		List<Employee> list = new ArrayList<>();
@@ -202,7 +202,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	private Employee getEmployeeFull(ResultSet rs) throws SQLException {
 		int empNo = rs.getInt("emp_no");
-		String empName = rs.getString("emp_name");
+		String empName = rs.getNString("emp_name");
 		Title title = new Title(rs.getInt("title"), rs.getString("title_name"));
 		Employee manager = new Employee(rs.getInt("manager_no"));
 		manager.setEmpName(rs.getString("manager_name"));
@@ -212,7 +212,4 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		dept.setDeptName(rs.getString("dept_name"));
 		return new Employee(empNo, empName, title, manager, salary, dept);
 	}
-
-	
-
 }
