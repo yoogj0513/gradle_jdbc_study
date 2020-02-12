@@ -128,6 +128,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	protected void btnEmployeeActionPerformed(ActionEvent e) {
 		JFrame frame = new JFrame();
+		frame.setBounds(100, 100, 450, 700);
+		EmployeeUiPanel tp = new EmployeeUiPanel();
+		frame.getContentPane().add(tp);
+		frame.setVisible(true);
+		
+		
+		/*
+		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 450, 450);
 		EmployeeUiService service = new EmployeeUiService();
 		List<Department> list = service.showDeptList();
@@ -148,5 +156,6 @@ public class MainFrame extends JFrame implements ActionListener {
 //		tp.setService(service);
 		frame.add(tp);
 		frame.setVisible(true);
+		*/
 	}
 }
