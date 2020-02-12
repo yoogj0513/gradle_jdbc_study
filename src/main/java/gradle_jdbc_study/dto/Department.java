@@ -47,11 +47,6 @@ public class Department {
 	}
 
 	@Override
-	public String toString() {
-		return String.format("Department [deptNo=%s, deptName=%s, floor=%s]", deptNo, deptName, floor);
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -71,5 +66,10 @@ public class Department {
 		if (deptNo != other.deptNo)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s(%d)", deptName, deptNo);
 	}
 }

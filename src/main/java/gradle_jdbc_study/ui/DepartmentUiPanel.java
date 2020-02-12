@@ -16,6 +16,7 @@ import javax.swing.JPopupMenu;
 import gradle_jdbc_study.dto.Department;
 import gradle_jdbc_study.dto.Employee;
 import gradle_jdbc_study.ui.content.DepartmentPanel;
+import gradle_jdbc_study.ui.exception.InvalidCheckException;
 import gradle_jdbc_study.ui.list.DepartmentTblPanel;
 import gradle_jdbc_study.ui.service.DepartmentUiService;
 
@@ -138,12 +139,14 @@ public class DepartmentUiPanel extends JPanel implements ActionListener {
 	
 	protected void btnAddActionPerformed(ActionEvent e) {
 		try {
-			Department item = pDepartment.getItem();
+			Department item = pDepartment.getItem(); //공백이면 예외발생 -> InvalidCheckException
 			pDeptList.addItem(item);
 			service.insertDept(item);
 			pDepartment.clearTf();
 			JOptionPane.showMessageDialog(null, "부서가 추가되었습니다.");
-		} catch(Exception e1) {
+		} catch(InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (Exception e1) {
 			SQLException e2 = (SQLException) e1;
 			if(e2.getErrorCode() == 1062) {
 				JOptionPane.showMessageDialog(null, "부서번호 중복");

@@ -13,4 +13,5 @@ public abstract class AbsItemPanel<T> extends JPanel {
 	
 	public abstract void clearTf();
 
+	public abstract void validCheck();
 }

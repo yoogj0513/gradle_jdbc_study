@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import gradle_jdbc_study.dto.Employee;
 import gradle_jdbc_study.dto.Title;
 import gradle_jdbc_study.ui.content.TitlePanel;
+import gradle_jdbc_study.ui.exception.InvalidCheckException;
 import gradle_jdbc_study.ui.list.TitleTblPanel;
 import gradle_jdbc_study.ui.service.TitleUiService;
 
@@ -144,6 +145,8 @@ public class TitleUiPanel extends JPanel implements ActionListener {
 			pTitleList.addItem(item);
 			service.addTitleItem(item);
 			pTitle.clearTf();
+		} catch(InvalidCheckException e2) {
+			JOptionPane.showMessageDialog(null, e2.getMessage());
 		} catch (Exception e1) {
 			SQLException e2 = (SQLException) e1;
 			if(e2.getErrorCode() == 1062) {

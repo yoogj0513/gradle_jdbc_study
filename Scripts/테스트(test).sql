@@ -53,7 +53,8 @@ select e.emp_no, e.emp_name, e.title, t.title_name, m.emp_name as manager_name, 
 
 
 
-
-
+select emp_no, emp_name, t.title_name
+	from employee e left join title t on e.title = t.title_no
+	where dept = 2;
 
 
