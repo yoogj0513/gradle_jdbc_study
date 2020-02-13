@@ -57,6 +57,19 @@ public class Employee {
 		this.passwd = passwd;
 		this.hireDate = hireDate;
 	}
+	
+	
+	public Employee(int empNo, String empName, Title title, Employee manager, int salary, Department dept,
+			Date hireDate, byte[] pic) {
+		this.empNo = empNo;
+		this.empName = empName;
+		this.title = title;
+		this.manager = manager;
+		this.salary = salary;
+		this.dept = dept;
+		this.hireDate = hireDate;
+		this.pic = pic;
+	}
 
 	public Employee(int empNo, String empName, Title title, Employee manager, int salary, Department dept,
 			String passwd, Date hireDate, byte[] pic) {
@@ -180,5 +193,19 @@ public class Employee {
 //				passwd==null?"****":passwd, 
 //				String.format("%1$tF %1$tT", hireDate), //tF, tT :F(년-월-일) T(00:00:00) 날짜 포멧 / 1$는 하나의 매개변수로 여러 곳에 적용
 //				pic != null? pic.length:null);
+	}
+	
+	public String toDebug() {
+		return String.format(
+						"[%s %s %s %s %s %s %s %s %s]",
+						empNo, 
+						empName, 
+						title.getTitleNo(), 
+						manager.getEmpNo(), 
+						salary, 
+						dept.getDeptNo(), 
+						passwd==null?"****":passwd, 
+						String.format("%1$tF %1$tT", hireDate), //tF, tT :F(년-월-일) T(00:00:00) 날짜 포멧 / 1$는 하나의 매개변수로 여러 곳에 적용
+						pic != null? pic.length:null);
 	}
 }

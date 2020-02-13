@@ -21,6 +21,7 @@ public abstract class AbstractTblPanel<T> extends JPanel {
 	private JScrollPane scrollPane;
 	protected JTable table;
 	protected NotEditableModel model;
+	protected List<T> list;
 
 	public AbstractTblPanel() {
 		initialize();
@@ -44,6 +45,7 @@ public abstract class AbstractTblPanel<T> extends JPanel {
 	}
 	
 	public void loadData(List<T> items) {
+		list = items;
 		model = new NotEditableModel(getRows(items), getColNames());
 		table.setModel(model);
 
@@ -105,7 +107,10 @@ public abstract class AbstractTblPanel<T> extends JPanel {
 		return selectedIdx;
 	}
 	
-	public abstract T getSelectedItem();
+	public T getSelectedItem() {
+		int selectedIdx = getSelectedRowIdx();
+		return list.get(selectedIdx);
+	};
 	
 	//수정금지하기위한 모델 선언
 	protected class NotEditableModel extends DefaultTableModel{

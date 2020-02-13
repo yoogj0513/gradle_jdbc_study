@@ -22,6 +22,7 @@ import gradle_jdbc_study.ui.list.DepartmentTblPanel;
 import gradle_jdbc_study.ui.list.EmployeeTblPanel;
 import gradle_jdbc_study.ui.service.DepartmentUiService;
 import gradle_jdbc_study.ui.service.EmployeeUiService;
+import gradle_jdbc_study.util.LogUtil;
 
 @SuppressWarnings("serial")
 public class EmployeeUiPanel extends JPanel implements ActionListener {
@@ -29,15 +30,12 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 	private EmployeeUiService service;
 	private EmployeePanel pEmployee;
 	private EmployeeTblPanel pEmployeeList;
-	private DlgEmployee dialog;
-	private int updateIdx;
 	
 	private JButton btnAdd;
 	private JButton btnCancel;
 	
 	public EmployeeUiPanel() {
 		service = new EmployeeUiService();
-		dialog = new DlgEmployee();
 		initialize();
 	}
 	private void initialize() {
@@ -48,6 +46,7 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 		pContent.setLayout(new BorderLayout(0, 0));
 		
 		pEmployee = new EmployeePanel();
+		pEmployee.setService(service);
 		pContent.add(pEmployee, BorderLayout.CENTER);
 		
 		JPanel pBtn = new JPanel();
@@ -93,7 +92,6 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 			if(e.getActionCommand().contentEquals("수정")) {
 				Employee upEmp = pEmployeeList.getSelectedItem();
 				pEmployee.setItem(upEmp);
-				updateIdx = pEmployeeList.getSelectedRowIdx();
 				btnAdd.setText("수정");
 			}
 			if(e.getActionCommand().contentEquals("삭제")) {
@@ -124,19 +122,23 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 	
 	protected void btnUpdateActionPerformed(ActionEvent e) {
 		Employee upEmp = pEmployee.getItem();
-		pEmployeeList.updateRow(upEmp, updateIdx);
 		service.modifyEmployee(upEmp);
+		
+		pEmployeeList.updateRow(upEmp, pEmployeeList.getSelectedRowIdx());
+		
 		btnAdd.setText("추가");
 		pEmployee.clearTf();
+		JOptionPane.showMessageDialog(null, "부서가 수정되었습니다.");
 	}
 	
 	protected void btnAddActionPerformed(ActionEvent e) {
 		try {
 			Employee newEmp = pEmployee.getItem(); //공백이면 예외발생 -> InvalidCheckException
+			LogUtil.prnLog(newEmp.toDebug());
 			pEmployeeList.addItem(newEmp);
 			service.addEmployee(newEmp);
 			pEmployee.clearTf();
-			JOptionPane.showMessageDialog(null, "부서가 추가되었습니다.");
+			JOptionPane.showMessageDialog(null, String.format("%s(%d) 추가되었습니다.", newEmp.getEmpName(), newEmp.getEmpNo()));
 		} catch(InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (Exception e1) {
