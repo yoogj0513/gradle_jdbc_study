@@ -93,6 +93,10 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 				Employee delEmp = pEmployeeList.getSelectedItem();
 				service.removeEmployee(delEmp);
 				pEmployeeList.removeRow();
+				pEmployee.clearTf();
+				if(btnAdd.getText().contentEquals("수정")) {
+					btnAdd.setText("추가");
+				}
 				JOptionPane.showMessageDialog(null, "삭제되었습니다.");
 			}
 		}
