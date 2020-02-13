@@ -2,28 +2,26 @@ package gradle_jdbc_study.ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import gradle_jdbc_study.dto.Employee;
 import gradle_jdbc_study.ui.service.LoginService;
 
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+@SuppressWarnings("serial")
 public class LoginFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -65,7 +63,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 	private void initialize() {
 		setTitle("로그인");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 403, 245);
+		setBounds(100, 100, 400, 245);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -92,7 +90,6 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pContent.add(pfPasswd);
 		
 		JPanel pBtns = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) pBtns.getLayout();
 		contentPane.add(pBtns, BorderLayout.SOUTH);
 		
 		btnLogin = new JButton("로그인");

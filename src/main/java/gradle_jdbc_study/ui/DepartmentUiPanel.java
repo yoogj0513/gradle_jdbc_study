@@ -27,7 +27,6 @@ public class DepartmentUiPanel extends JPanel implements ActionListener {
 	private DepartmentPanel pDepartment;
 	private DepartmentTblPanel pDeptList;
 	private DlgEmployee dialog;
-	private int updateIdx;
 	
 	private JButton btnAdd;
 	private JButton btnCancel;
@@ -92,8 +91,8 @@ public class DepartmentUiPanel extends JPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().contentEquals("수정")) {
-				pDepartment.setItem(pDeptList.getSelectedItem());
-				updateIdx = pDeptList.getSelectedRowIdx();
+				Department upDate = pDeptList.getSelectedItem();
+				pDepartment.setItem(upDate);
 				btnAdd.setText("수정");
 			}
 			if(e.getActionCommand().contentEquals("삭제")) {
@@ -121,20 +120,21 @@ public class DepartmentUiPanel extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnAdd) {
 			if(e.getActionCommand().contentEquals("수정")) {
-				JOptionPane.showMessageDialog(null, e.getActionCommand());
+				//JOptionPane.showMessageDialog(null, e.getActionCommand());
 				btnUpdateActionPerformed(e);
-				return;
+			} else {				
+				btnAddActionPerformed(e);			
 			}
-			btnAddActionPerformed(e);			
 		}
 	}
 	
 	protected void btnUpdateActionPerformed(ActionEvent e) {
 		Department item = pDepartment.getItem();
-		pDeptList.updateRow(item, updateIdx);
+		pDeptList.updateRow(item, pDeptList.getSelectedRowIdx());
 		service.updateDept(item);
 		btnAdd.setText("추가");
 		pDepartment.clearTf();
+		JOptionPane.showMessageDialog(null, "부서가 수정되었습니다.");
 	}
 	
 	protected void btnAddActionPerformed(ActionEvent e) {

@@ -1,32 +1,29 @@
 package gradle_jdbc_study.ui;
 
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
-import gradle_jdbc_study.dto.Employee;
 import gradle_jdbc_study.dto.Title;
 import gradle_jdbc_study.ui.content.TitlePanel;
 import gradle_jdbc_study.ui.exception.InvalidCheckException;
 import gradle_jdbc_study.ui.list.TitleTblPanel;
 import gradle_jdbc_study.ui.service.TitleUiService;
 
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.List;
-import java.awt.event.ActionEvent;
-
 @SuppressWarnings("serial")
 public class TitleUiPanel extends JPanel implements ActionListener {
 	private JButton btnAdd;
 	private JButton btnCancel;
 	private TitleUiService service;
-	private DlgEmployee dialog;
-	private int updateIdx;
+//	private DlgEmployee dialog;
 	
 	private TitlePanel pTitle;
 	private TitleTblPanel pTitleList;
@@ -34,7 +31,7 @@ public class TitleUiPanel extends JPanel implements ActionListener {
 
 	public TitleUiPanel() {
 		service = new TitleUiService();
-		dialog = new DlgEmployee();
+//		dialog = new DlgEmployee();
 		initialize();
 	}
 
@@ -81,9 +78,9 @@ public class TitleUiPanel extends JPanel implements ActionListener {
 		deleteItem.addActionListener(myPopMenuListener);
 		popMenu.add(deleteItem);
 		
-		JMenuItem showEmployee = new JMenuItem("소속직원");
-		showEmployee.addActionListener(myPopMenuListener);
-		popMenu.add(showEmployee);
+//		JMenuItem showEmployee = new JMenuItem("소속직원");
+//		showEmployee.addActionListener(myPopMenuListener);
+//		popMenu.add(showEmployee);
 		
 		return popMenu;
 	}
@@ -95,7 +92,6 @@ public class TitleUiPanel extends JPanel implements ActionListener {
 			if(e.getActionCommand().contentEquals("수정")) {
 				Title item = pTitleList.getSelectedItem();
 				pTitle.setItem(item);
-				updateIdx = pTitleList.getSelectedRowIdx();
 				btnAdd.setText("수정");
 			}
 			
@@ -106,14 +102,14 @@ public class TitleUiPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(null, "삭제되었습니다.");
 			}
 			
-			if(e.getActionCommand().contentEquals("소속직원")) {
-				Title selectedTitle = pTitleList.getSelectedItem();
-				List<Employee> list = service.showEmployeeGroupByTitle(selectedTitle);
-				dialog.setEmpList(list);
-				dialog.setTitle(selectedTitle.getTitleName() + " 부서");
-				
-				dialog.setVisible(true);
-			}
+//			if(e.getActionCommand().contentEquals("소속직원")) {
+//				Title selectedTitle = pTitleList.getSelectedItem();
+//				List<Employee> list = service.showEmployeeGroupByTitle(selectedTitle);
+//				dialog.setEmpList(list);
+//				dialog.setTitle(selectedTitle.getTitleName() + " 부서");
+//				
+//				dialog.setVisible(true);
+//			}
 			
 		}
 	};
@@ -134,9 +130,11 @@ public class TitleUiPanel extends JPanel implements ActionListener {
 
 	private void btnUpdateActionPerformed(ActionEvent e) {
 		Title item = pTitle.getItem();
-		pTitleList.updateRow(item, updateIdx);
+		pTitleList.updateRow(item, pTitleList.getSelectedRowIdx());
 		service.updateTitleItem(item);
 		btnAdd.setText("추가");
+		pTitle.clearTf();
+		JOptionPane.showMessageDialog(null, "직책이 수정되었습니다.");
 	}
 
 	protected void btnAddActionPerformed(ActionEvent e) {
@@ -145,6 +143,7 @@ public class TitleUiPanel extends JPanel implements ActionListener {
 			pTitleList.addItem(item);
 			service.addTitleItem(item);
 			pTitle.clearTf();
+			JOptionPane.showMessageDialog(null, "직책이 추가되었습니다");
 		} catch(InvalidCheckException e2) {
 			JOptionPane.showMessageDialog(null, e2.getMessage());
 		} catch (Exception e1) {

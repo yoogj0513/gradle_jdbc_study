@@ -82,12 +82,13 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 	@Override
 	public int updateDept(Department dept) {
-		String sql = "update department set dept_name = ? where dept_no = ?";
+		String sql = "update department set dept_name = ?, floor=? where dept_no = ?";
 		int res = -1;
 		try(Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, dept.getDeptName());
-			pstmt.setInt(2, dept.getDeptNo());
+			pstmt.setInt(2, dept.getFloor());
+			pstmt.setInt(3, dept.getDeptNo());
 			res = pstmt.executeUpdate();
 			LogUtil.prnLog(pstmt);
 		} catch (SQLException e) {

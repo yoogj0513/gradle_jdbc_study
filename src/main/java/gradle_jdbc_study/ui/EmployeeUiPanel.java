@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,14 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
-import gradle_jdbc_study.dto.Department;
 import gradle_jdbc_study.dto.Employee;
-import gradle_jdbc_study.ui.content.DepartmentPanel;
 import gradle_jdbc_study.ui.content.EmployeePanel;
 import gradle_jdbc_study.ui.exception.InvalidCheckException;
-import gradle_jdbc_study.ui.list.DepartmentTblPanel;
 import gradle_jdbc_study.ui.list.EmployeeTblPanel;
-import gradle_jdbc_study.ui.service.DepartmentUiService;
 import gradle_jdbc_study.ui.service.EmployeeUiService;
 import gradle_jdbc_study.util.LogUtil;
 
@@ -63,9 +58,9 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 		pList.setLayout(new BorderLayout(0, 0));
 		
 		pEmployeeList = new EmployeeTblPanel();
-		pList.add(pEmployeeList, BorderLayout.CENTER);
 		pEmployeeList.loadData(service.showEmployeeList());
 		pEmployeeList.setPopupMenu(createPopupMenu());
+		pList.add(pEmployeeList, BorderLayout.CENTER);
 		
 		btnAdd.addActionListener(this);
 		btnCancel.addActionListener(this);
@@ -112,11 +107,11 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 		}
 		if (e.getSource() == btnAdd) {
 			if(e.getActionCommand().contentEquals("수정")) {
-				JOptionPane.showMessageDialog(null, e.getActionCommand());
+//				JOptionPane.showMessageDialog(null, e.getActionCommand());
 				btnUpdateActionPerformed(e);
-				return;
+			} else {				
+				btnAddActionPerformed(e);			
 			}
-			btnAddActionPerformed(e);			
 		}
 	}
 	
@@ -154,7 +149,9 @@ public class EmployeeUiPanel extends JPanel implements ActionListener {
 	}
 	
 	protected void btnCancelActionPerformed(ActionEvent e) {
+		if(btnAdd.getText().contentEquals("수정")) {
+			btnAdd.setText("추가");
+		}
 		pEmployee.clearTf();
-		btnAdd.setText("추가");
 	}
 }

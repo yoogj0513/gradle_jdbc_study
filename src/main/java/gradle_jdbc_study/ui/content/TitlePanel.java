@@ -2,11 +2,9 @@ package gradle_jdbc_study.ui.content;
 
 import java.awt.GridLayout;
 
-import javax.activity.InvalidActivityException;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
 
 import gradle_jdbc_study.dto.Title;
 import gradle_jdbc_study.ui.exception.InvalidCheckException;
@@ -22,7 +20,7 @@ public class TitlePanel extends AbsItemPanel<Title> {
 	}
 	
 	private void initialize() {
-		setBorder(new TitledBorder(null, "\uC9C1\uCC45\uC815\uBCF4", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+//		setBorder(new TitledBorder(null, "\uC9C1\uCC45\uC815\uBCF4", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new GridLayout(0, 2, 10, 10));
 		
 		JLabel lblNo = new JLabel("번호");
@@ -30,7 +28,6 @@ public class TitlePanel extends AbsItemPanel<Title> {
 		add(lblNo);
 		
 		tfNo = new JTextField();
-		tfNo.setText("");
 		add(tfNo);
 		tfNo.setColumns(10);
 		

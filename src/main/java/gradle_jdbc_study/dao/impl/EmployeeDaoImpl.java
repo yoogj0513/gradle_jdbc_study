@@ -73,7 +73,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				ResultSet rs = pstmt.executeQuery()){
 			List<Employee> list = new ArrayList<>();
 			while(rs.next()) {
-				list.add(getEmployeeJoin(rs, false));
+				list.add(getEmployeeJoin(rs));
 			}
 			LogUtil.prnLog(pstmt);
 			return list;
@@ -83,7 +83,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return null;
 	}
 
-	private Employee getEmployeeJoin(ResultSet rs, boolean b) throws SQLException {
+	private Employee getEmployeeJoin(ResultSet rs) throws SQLException {
 		int empNo = rs.getInt("emp_no");
 		String empName = rs.getString("emp_name");
 		Title title = new Title(rs.getInt("title_no"), rs.getString("title_name"));
@@ -111,6 +111,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			pstmt.setInt(5, emp.getSalary());
 			pstmt.setInt(6, emp.getDept().getDeptNo());
 			pstmt.setString(7, emp.getPasswd());
+			// util.Date -> sql.Date로 변환
 			pstmt.setTimestamp(8, new Timestamp(emp.getHireDate().getTime()));
 			LogUtil.prnLog(pstmt);
 			if(emp.getPic() != null) {
@@ -233,24 +234,24 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return new Employee(empNo, empName, title, manager, salary, dept);
 	}
 
-	@Override
-	public List<Employee> selectEmployeeGroupByTitle(Title title) {
-		String sql="select e.emp_no, e.emp_name, e.title, t.title_name, m.emp_name as manager_name, m.emp_no as manager_no, e.salary, e.dept, d.dept_name" + 
-				"	from employee e left join employee m on e.manager = m.emp_no join department d on e.dept = d.dept_no join title t on e.title = t.title_no " + 
-				"	where e.title = ?";
-		List<Employee> list = new ArrayList<>();
-		try(Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setInt(1, title.getTitleNo());
-			LogUtil.prnLog(pstmt);
-			try(ResultSet rs = pstmt.executeQuery()){
-				while(rs.next()) {
-					list.add(getEmployeeFull(rs));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
+//	@Override
+//	public List<Employee> selectEmployeeGroupByTitle(Title title) {
+//		String sql="select e.emp_no, e.emp_name, e.title, t.title_name, m.emp_name as manager_name, m.emp_no as manager_no, e.salary, e.dept, d.dept_name" + 
+//				"	from employee e left join employee m on e.manager = m.emp_no join department d on e.dept = d.dept_no join title t on e.title = t.title_no " + 
+//				"	where e.title = ?";
+//		List<Employee> list = new ArrayList<>();
+//		try(Connection con = MysqlDataSource.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(sql)){
+//			pstmt.setInt(1, title.getTitleNo());
+//			LogUtil.prnLog(pstmt);
+//			try(ResultSet rs = pstmt.executeQuery()){
+//				while(rs.next()) {
+//					list.add(getEmployeeFull(rs));
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
 }

@@ -60,6 +60,11 @@ public class EmployeePanel extends AbsItemPanel<Employee> implements ActionListe
 	private Dimension picDimension = new Dimension(100, 150);
 	private JLabel lblPic;
 	private EmployeeUiService service;
+	
+	private JButton btnPic;
+	private JSpinner spSalary;
+	private JDateChooser tfHireDate;
+	private String picPath;
 
 	public EmployeePanel() {
 		setLayout(new BorderLayout(0, 0));
@@ -196,10 +201,6 @@ public class EmployeePanel extends AbsItemPanel<Employee> implements ActionListe
 			}
 		}
 	};
-	private JButton btnPic;
-	private JSpinner spSalary;
-	private JDateChooser tfHireDate;
-	private String picPath;
 	
 
 	public void setCmbDeptList(List<Department> deptList) {
@@ -273,15 +274,15 @@ public class EmployeePanel extends AbsItemPanel<Employee> implements ActionListe
 	
 	private void setPic(byte[] byteImg) {
 		//getImage().getScaledInstance() : 이미지 크기 맞추기
-		lblPic.setIcon(new ImageIcon(new ImageIcon(byteImg).getImage().getScaledInstance(
-				(int)picDimension.getWidth(), (int)picDimension.getHeight(), Image.SCALE_DEFAULT)));
+		lblPic.setIcon(new ImageIcon(new ImageIcon(byteImg).getImage().getScaledInstance((int)picDimension.getWidth(), 
+				(int)picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
 	
 	private void setPic(String imgPath) {
 		//getImage().getScaledInstance() : 이미지 크기 맞추기
 		picPath = imgPath;
-		lblPic.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(
-				(int)picDimension.getWidth(), (int)picDimension.getHeight(), Image.SCALE_DEFAULT)));
+		lblPic.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance((int)picDimension.getWidth(), 
+				(int)picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
 
 	@Override
@@ -308,11 +309,11 @@ public class EmployeePanel extends AbsItemPanel<Employee> implements ActionListe
 		}
 	}
 	
-	protected void cmbDeptItemStateChanged(ItemEvent e) {
-		if(e.getStateChange() == ItemEvent.SELECTED) {
-			JOptionPane.showMessageDialog(null, cmbDept.getSelectedItem());
-		}
-	}
+//	protected void cmbDeptItemStateChanged(ItemEvent e) {
+//		if(e.getStateChange() == ItemEvent.SELECTED) {
+//			JOptionPane.showMessageDialog(null, cmbDept.getSelectedItem());
+//		}
+//	}
 
 	public JComboBox<Department> getCmbDept() {
 		return cmbDept;
@@ -320,10 +321,6 @@ public class EmployeePanel extends AbsItemPanel<Employee> implements ActionListe
 
 	public JComboBox<Employee> getCmbManager() {
 		return cmbManager;
-	}
-
-	public JComboBox<Title> getCmbTitle() {
-		return cmbTitle;
 	}
 	
 	

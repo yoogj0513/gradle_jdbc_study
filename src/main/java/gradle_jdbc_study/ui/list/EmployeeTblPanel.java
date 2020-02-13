@@ -2,9 +2,7 @@ package gradle_jdbc_study.ui.list;
 
 import javax.swing.SwingConstants;
 
-import gradle_jdbc_study.dto.Department;
 import gradle_jdbc_study.dto.Employee;
-import gradle_jdbc_study.dto.Title;
 
 @SuppressWarnings("serial")
 public class EmployeeTblPanel extends AbstractTblPanel<Employee> {
@@ -15,7 +13,6 @@ public class EmployeeTblPanel extends AbstractTblPanel<Employee> {
 		tableSetWidth(100, 100, 80, 150, 100, 100, 110, 50);
 		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 5, 6, 7);
 		tableCellAlign(SwingConstants.RIGHT, 4);
-		
 	}
 
 	@Override

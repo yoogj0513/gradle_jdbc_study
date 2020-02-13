@@ -4,22 +4,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import gradle_jdbc_study.dto.Department;
-import gradle_jdbc_study.dto.Title;
-import gradle_jdbc_study.ui.content.EmployeePanel;
-import gradle_jdbc_study.ui.service.EmployeeUiService;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
@@ -67,7 +58,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		contentPane.add(panel);
 		panel.setLayout(new GridLayout(0, 3, 5, 5));
 
-		btnTitle = new JButton("직책");
+		btnTitle = new JButton("직책 정보");
 		btnTitle.addActionListener(this);
 		panel.add(btnTitle);
 
@@ -128,7 +119,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	protected void btnEmployeeActionPerformed(ActionEvent e) {
 		JFrame frame = new JFrame();
-		frame.setBounds(100, 100, 450, 700);
+		frame.setBounds(100, 100, 550, 700);
 		EmployeeUiPanel tp = new EmployeeUiPanel();
 		frame.getContentPane().add(tp);
 		frame.setVisible(true);

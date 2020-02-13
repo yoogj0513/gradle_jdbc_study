@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public abstract class AbsItemPanel<T> extends JPanel {
-	public AbsItemPanel() {
-	}
 
 	public abstract T getItem();
 	
